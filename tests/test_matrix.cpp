@@ -57,7 +57,7 @@ TEST(MatrixTest, MatrixMultiplication) {
 
 TEST(MatrixTest, MatrixTranspose) {
     Matrix A = create_matrix(2, 3);
-    
+
     A.data[0][0] = 1; A.data[0][1] = 2; A.data[0][2] = 3;
     A.data[1][0] = 4; A.data[1][1] = 5; A.data[1][2] = 6;
 
@@ -77,7 +77,7 @@ TEST(MatrixTest, MatrixTranspose) {
 
 TEST(MatrixTest, MatrixSum) {
     Matrix A = create_matrix(2, 2);
-    
+
     A.data[0][0] = 1; A.data[0][1] = 2;
     A.data[1][0] = 3; A.data[1][1] = 4;
 
@@ -90,9 +90,9 @@ TEST(MatrixTest, MatrixSum) {
 TEST(MatrixTest, AdditionSizeMismatch) {
     Matrix A = create_matrix(2, 2);
     Matrix B = create_matrix(3, 3);
-    
+
     EXPECT_THROW(matrix_add(A, B), std::invalid_argument);
-    
+
     free_matrix(A);
     free_matrix(B);
 }
@@ -100,9 +100,47 @@ TEST(MatrixTest, AdditionSizeMismatch) {
 TEST(MatrixTest, MultiplicationSizeMismatch) {
     Matrix A = create_matrix(2, 3);
     Matrix B = create_matrix(2, 3); // Несовместимые размеры
-    
+
     EXPECT_THROW(matrix_multiply(A, B), std::invalid_argument);
-    
+
+    free_matrix(A);
+    free_matrix(B);
+}
+
+// tests/test_matrix.cpp
+TEST(MatrixTest, MatrixVStack) {
+    Matrix A = create_matrix(2, 2);
+    Matrix B = create_matrix(2, 2);
+
+    A.data[0][0] = 1; A.data[0][1] = 2;
+    A.data[1][0] = 3; A.data[1][1] = 4;
+
+    B.data[0][0] = 5; B.data[0][1] = 6;
+    B.data[1][0] = 7; B.data[1][1] = 8;
+
+    Matrix C = matrix_vstack(A, B);
+
+    // Проверяем размеры
+    EXPECT_EQ(C.rows, 4);
+    EXPECT_EQ(C.cols, 2);
+
+    // Проверяем содержимое
+    EXPECT_EQ(C.data[0][0], 1); EXPECT_EQ(C.data[0][1], 2);  // A[0]
+    EXPECT_EQ(C.data[1][0], 3); EXPECT_EQ(C.data[1][1], 4);  // A[1]
+    EXPECT_EQ(C.data[2][0], 5); EXPECT_EQ(C.data[2][1], 6);  // B[0]
+    EXPECT_EQ(C.data[3][0], 7); EXPECT_EQ(C.data[3][1], 8);  // B[1]
+
+    free_matrix(A);
+    free_matrix(B);
+    free_matrix(C);
+}
+
+TEST(MatrixTest, MatrixVStackInvalid) {
+    Matrix A = create_matrix(2, 2);
+    Matrix B = create_matrix(2, 3); // Разное количество столбцов
+
+    EXPECT_THROW(matrix_vstack(A, B), std::invalid_argument);
+
     free_matrix(A);
     free_matrix(B);
 }

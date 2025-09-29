@@ -19,3 +19,6 @@ Matrix matrix_from_array(double* data, int rows, int cols);
 
 // Индивидуальное задание - сумма элементов
 double matrix_sum(Matrix m);
+
+// matrix.h - добавить объявление функции
+Matrix matrix_vstack(Matrix a, Matrix b);

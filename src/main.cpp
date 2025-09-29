@@ -6,6 +6,8 @@ int main() {
         // Создаем тестовые матрицы
         Matrix A = create_matrix(2, 2);
         Matrix B = create_matrix(2, 2);
+        Matrix F = create_matrix(1, 2);
+        Matrix G = create_matrix(1, 2);
 
         // Заполняем данными
         A.data[0][0] = 1; A.data[0][1] = 2;
@@ -13,6 +15,10 @@ int main() {
 
         B.data[0][0] = 5; B.data[0][1] = 6;
         B.data[1][0] = 7; B.data[1][1] = 8;
+
+        F.data[0][0] = 9; F.data[0][1] = 10;
+        G.data[0][0] = 11; G.data[0][1] = 12;
+
 
         std::cout << "Matrix A:" << std::endl;
         print_matrix(A);
@@ -34,10 +40,15 @@ int main() {
         Matrix E = matrix_transpose(A);
         std::cout << "\nTranspose of A:" << std::endl;
         print_matrix(E);
+        std::cout << "\nMatrix F:" << std::endl;
+        print_matrix(F);
 
+        std::cout << "\nMatrix G:" << std::endl;
+        print_matrix(G);
         // Тестируем индивидуальное задание - сумму элементов
-        double total_sum = matrix_sum(A);
-        std::cout << "\nSum of all elements in matrix A: " << total_sum << std::endl;
+        Matrix H = matrix_vstack(F, G);
+        std::cout << "\nVertical stack of F and G:" << std::endl;
+        print_matrix(H);
 
         // Освобождаем память (КАЖДУЮ МАТРИЦУ ТОЛЬКО ОДИН РАЗ!)
         free_matrix(A);
@@ -45,6 +56,10 @@ int main() {
         free_matrix(C);
         free_matrix(D);
         free_matrix(E);
+        free_matrix(F);
+        free_matrix(G);
+        free_matrix(H);
+
 
         std::cout << "\nAll operations completed successfully!" << std::endl;
 

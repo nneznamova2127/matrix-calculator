@@ -1,3 +1,4 @@
+
 #include "matrix.h"
 #include <iostream>
 #include <stdexcept>
@@ -117,7 +118,7 @@ double matrix_sum(Matrix m) {
     if (m.data == nullptr || m.rows == 0 || m.cols == 0) {
         return 0.0;
     }
-    
+
     double sum = 0.0;
     for (int i = 0; i < m.rows; i++) {
         for (int j = 0; j < m.cols; j++) {
@@ -125,4 +126,31 @@ double matrix_sum(Matrix m) {
         }
     }
     return sum;
+}
+
+// matrix.cpp - реализация функции
+Matrix matrix_vstack(Matrix a, Matrix b) {
+    // Проверка совпадения количества столбцов
+    if (a.cols != b.cols) {
+        throw std::invalid_argument("Matrices must have the same number of columns for vertical stacking");
+    }
+
+    // Создаем результирующую матрицу
+    Matrix result = create_matrix(a.rows + b.rows, a.cols);
+
+    // Копируем данные из первой матрицы
+    for (int i = 0; i < a.rows; i++) {
+        for (int j = 0; j < a.cols; j++) {
+            result.data[i][j] = a.data[i][j];
+        }
+    }
+
+    // Копируем данные из второй матрицы
+    for (int i = 0; i < b.rows; i++) {
+        for (int j = 0; j < b.cols; j++) {
+            result.data[a.rows + i][j] = b.data[i][j];
+        }
+    }
+
+    return result;
 }
