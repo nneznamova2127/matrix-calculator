@@ -40,6 +40,7 @@ int main() {
         Matrix E = matrix_transpose(A);
         std::cout << "\nTranspose of A:" << std::endl;
         print_matrix(E);
+        
         std::cout << "\nMatrix F:" << std::endl;
         print_matrix(F);
 
